@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6117179314589196953}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.01, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children:
   - {fileID: 6894807077469870880}
   m_Father: {fileID: 0}
@@ -179,6 +179,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 905aece2f7cf2304aa8f2017abf4318f, type: 3}
       propertyPath: m_Name
       value: RotatingStick
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 905aece2f7cf2304aa8f2017abf4318f, type: 3}
+      propertyPath: m_TagString
+      value: RotatorStick
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 905aece2f7cf2304aa8f2017abf4318f, type: 3}
