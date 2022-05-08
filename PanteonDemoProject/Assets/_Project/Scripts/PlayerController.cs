@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 startPosition;
 
+    private bool isAddingForce = false;
+    private bool forceToRight = false;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -23,7 +26,22 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //TODO: Düzelt
         animator.SetBool("isRunning", true);
+
+        if (isAddingForce)
+        {
+            if (forceToRight)
+            {
+                GetComponent<Rigidbody>().AddForce(Vector3.right * 50, ForceMode.Force);
+            }
+            else
+            {
+                GetComponent<Rigidbody>().AddForce(Vector3.left * 50, ForceMode.Force);
+            }
+            
+        }
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -37,7 +55,6 @@ public class PlayerController : MonoBehaviour
 
             StartCoroutine(RestartLevel());
 
-            //transform.position = new Vector3(0f,0f, -0.588f);
             
         }
         else if (collision.gameObject.CompareTag("RotatorStick"))
@@ -48,6 +65,29 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("hitStick", false);
             });
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("RotatingPlatform"))
+        {
+            isAddingForce = true;
+            if (other.GetComponent<RotatingPlatform>().side.Equals(RotatingSide.Right))
+            {
+                forceToRight = true;
+            }
+            else
+            {
+                forceToRight = false;
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("RotatingPlatform"))
+        {
+            isAddingForce = false;
         }
     }
 
