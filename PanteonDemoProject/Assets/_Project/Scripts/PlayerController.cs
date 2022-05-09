@@ -16,18 +16,23 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
-        playerMovement = GetComponent<SwerveController>();
+        EventManager.OnStateChanged += GameStateChanged;
     }
+
+    private void OnDestroy()
+    {
+        EventManager.OnStateChanged -= GameStateChanged;
+    }
+
     private void Start()
     {
         startPosition = transform.position;
+        animator = GetComponent<Animator>();
+        playerMovement = GetComponent<SwerveController>();
     }
 
     private void Update()
     {
-        //TODO: Düzelt
-        animator.SetBool("isRunning", true);
 
         if (isAddingForce)
         {
@@ -42,6 +47,23 @@ public class PlayerController : MonoBehaviour
             
         }
 
+    }
+
+    private void GameStateChanged(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.InGame:
+                playerMovement.enabled = true;
+                animator.SetBool("isRunning", true);
+                break;
+            case GameState.SwipeToDraw:
+                playerMovement.enabled = false;
+                //animator.SetTrigger("Dance");
+                break;
+            default:
+                break;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
