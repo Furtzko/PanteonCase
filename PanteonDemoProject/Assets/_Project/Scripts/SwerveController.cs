@@ -8,6 +8,7 @@ public class SwerveController : MonoBehaviour
     [SerializeField] private float swerveSpeed = 0.5f;
     [SerializeField] private float maxSwerveAmount = 1f;
     [SerializeField] private float forwardSpeed = 5f;
+    public float xClampValue = 3.5f;
 
     void Start()
     {
@@ -16,7 +17,7 @@ public class SwerveController : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -3.5f, 3.5f), transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -xClampValue, xClampValue), transform.position.y, transform.position.z);
 
         float swerveAmount = Time.deltaTime * swerveSpeed * _swerveInput.MoveFactorX;
         swerveAmount = Mathf.Clamp(swerveAmount, -maxSwerveAmount, maxSwerveAmount);

@@ -8,8 +8,10 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
     private SwerveController playerMovement;
+    private Rigidbody playerRb;
 
     private Vector3 startPosition;
+    [SerializeField]private Transform drawingPosition;
 
     private bool isAddingForce = false;
     private bool forceToRight = false;
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
         startPosition = transform.position;
         animator = GetComponent<Animator>();
         playerMovement = GetComponent<SwerveController>();
+        playerRb = GetComponent<Rigidbody>();
     }
 
     private void Update()
@@ -38,11 +41,11 @@ public class PlayerController : MonoBehaviour
         {
             if (forceToRight)
             {
-                GetComponent<Rigidbody>().AddForce(Vector3.right * 50, ForceMode.Force);
+                playerRb.AddForce(Vector3.right * 50, ForceMode.Force);
             }
             else
             {
-                GetComponent<Rigidbody>().AddForce(Vector3.left * 50, ForceMode.Force);
+                playerRb.AddForce(Vector3.left * 50, ForceMode.Force);
             }
             
         }
@@ -59,7 +62,13 @@ public class PlayerController : MonoBehaviour
                 break;
             case GameState.SwipeToDraw:
                 playerMovement.enabled = false;
-                //animator.SetTrigger("Dance");
+                animator.SetBool("isRunning", false);
+                animator.SetTrigger("jogging");
+                transform.DODynamicLookAt(drawingPosition.position, 1f);
+                transform.DOMove(drawingPosition.position, 3f).SetEase(Ease.Linear);
+                break;
+            case GameState.Drawing:
+                animator.SetTrigger("drawing");
                 break;
             default:
                 break;
@@ -94,6 +103,9 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("RotatingPlatform"))
         {
+            //TODO: swerveCont singleton yap, instancedan düzenle.
+            GetComponent<SwerveController>().xClampValue = 100f;
+
             isAddingForce = true;
             if (other.GetComponent<RotatingPlatform>().side.Equals(RotatingSide.Right))
             {
@@ -109,6 +121,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("RotatingPlatform"))
         {
+            GetComponent<SwerveController>().xClampValue = 3.5f;
             isAddingForce = false;
         }
     }

@@ -20,28 +20,6 @@ public class RotatingPlatform : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Player") || other.CompareTag("Opponent"))
-        {
-
-            /*if (side.Equals(RotatingSide.Right))
-            {
-                other.transform.GetComponent<Rigidbody>().AddForce(Vector3.right * force, ForceMode.Force);
-            }
-            else
-            {
-                other.transform.GetComponent<Rigidbody>().AddForce(Vector3.right, ForceMode.Force);
-            }
-            */
-            //other.transform.parent = transform;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        //other.transform.parent = null;
-    }
 }
 
 public enum RotatingSide
