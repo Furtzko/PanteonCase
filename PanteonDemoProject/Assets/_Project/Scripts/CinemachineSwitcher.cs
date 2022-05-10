@@ -10,6 +10,24 @@ public class CinemachineSwitcher : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera inGameCamera;
     [SerializeField] private CinemachineVirtualCamera drawingCamera;
 
+    private void Awake()
+    {
+        EventManager.OnStateChanged += GameStateChanged;
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.OnStateChanged -= GameStateChanged;
+    }
+
+    private void GameStateChanged(GameState state)
+    {
+        if (state.Equals(GameState.SwipeToDraw))
+        {
+            SwitchPriority();
+        }
+        //TODO: Level restart vb durumlarý ekle.
+    }
 
     private void SwitchPriority()
     {
