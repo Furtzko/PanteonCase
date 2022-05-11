@@ -36,16 +36,16 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-
+        //TODO: RotatingPlatform'a taþýnabilir
         if (isAddingForce)
         {
             if (forceToRight)
             {
-                playerRb.AddForce(Vector3.right * 50, ForceMode.Force);
+                playerRb.AddForce(Vector3.right * 100, ForceMode.Force);
             }
             else
             {
-                playerRb.AddForce(Vector3.left * 50, ForceMode.Force);
+                playerRb.AddForce(Vector3.left * 100, ForceMode.Force);
             }
             
         }
