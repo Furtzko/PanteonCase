@@ -19,7 +19,7 @@ public class OpponentSwerve : MonoBehaviour
     {
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -xClampValue, xClampValue), transform.position.y, transform.position.z);
 
-        float swerveAmount = Time.deltaTime * swerveSpeed * swerveSpeed * swerveDecider.MoveFactorX;
+        float swerveAmount = Time.deltaTime * swerveSpeed * swerveDecider.MoveFactorX;
         swerveAmount = Mathf.Clamp(swerveAmount, -maxSwerveAmount, maxSwerveAmount);
         transform.Translate(swerveAmount, 0, forwardSpeed * Time.deltaTime);
     }

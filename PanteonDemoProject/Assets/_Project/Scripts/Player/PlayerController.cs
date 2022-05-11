@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("hitStick", true);
 
-            transform.DOJump(transform.position + Vector3.back * 3, 2f, 1, .8f).SetEase(Ease.Linear).OnComplete( () =>
+            transform.DOJump(transform.position + Vector3.back * .5f, 1.5f, 1, .6f).SetEase(Ease.Linear).OnComplete( () =>
             {
                 animator.SetBool("hitStick", false);
             });
