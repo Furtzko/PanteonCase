@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class OpponentSwerveDecider : MonoBehaviour
 {
-    private GameObject hitObj;
     private float sphereRadius = 0.4f;
     private float maxDistance = 4f;
     [SerializeField] private LayerMask layerMask;
@@ -24,25 +23,41 @@ public class OpponentSwerveDecider : MonoBehaviour
         origin = transform.position + Vector3.up * 0.3f;
         direction = transform.forward;
         RaycastHit hit;
+
         if(Physics.SphereCast(origin,sphereRadius,direction,out hit,maxDistance,layerMask, QueryTriggerInteraction.UseGlobal))
         {
-            hitObj = hit.transform.gameObject;
             curHitDistance = hit.distance;
 
             if (!isRandomNumGenerated)
             {
-                RandomNumGenerate(hit.transform.position.x);
+                RandomNumGenerate();
             }
         }
         else
         {
             curHitDistance = maxDistance;
-            hitObj = null;
             isRandomNumGenerated = false;
             moveFactorX = 0f;
         }
 
+        //if (Physics.SphereCast(origin, sphereRadius, direction, out hit, 0.5f))
+        //{
+        //    if (hit.transform.CompareTag("VerticalPlatform"))
+        //    {
+        //        StartCoroutine(EscapeRotatingPlatform());
+        //    }
+        //}
+
     }
+
+    //private IEnumerator EscapeRotatingPlatform()
+    //{
+    //    moveFactorX = -transform.position.z;
+
+    //    yield return new WaitForSeconds(1f);
+
+    //    moveFactorX = 0;
+    //}
 
     //TODO: kaldýrýlabilir.
     private void OnDrawGizmosSelected()
@@ -52,7 +67,7 @@ public class OpponentSwerveDecider : MonoBehaviour
         Gizmos.DrawWireSphere(origin + direction * curHitDistance, sphereRadius);
     }
 
-    private void RandomNumGenerate(float obsTransfromX)
+    private void RandomNumGenerate()
     {
         moveFactorX = Random.Range(-10f, 10f);
 

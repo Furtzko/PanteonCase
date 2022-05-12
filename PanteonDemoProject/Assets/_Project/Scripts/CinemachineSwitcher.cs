@@ -5,10 +5,9 @@ using Cinemachine;
 
 public class CinemachineSwitcher : MonoBehaviour
 {
-    private bool _inGameCam = true;
-
     [SerializeField] private CinemachineVirtualCamera inGameCamera;
     [SerializeField] private CinemachineVirtualCamera drawingCamera;
+    [SerializeField] private CinemachineVirtualCamera finalCamera;
 
     private void Awake()
     {
@@ -22,26 +21,25 @@ public class CinemachineSwitcher : MonoBehaviour
 
     private void GameStateChanged(GameState state)
     {
-        if (state.Equals(GameState.SwipeToDraw))
+        switch (state)
         {
-            SwitchPriority();
+            case GameState.SwipeToStart:
+                inGameCamera.Priority = 1;
+                drawingCamera.Priority = 0;
+                finalCamera.Priority = 0;
+                break;
+            case GameState.Drawing:
+                inGameCamera.Priority = 0;
+                drawingCamera.Priority = 1;
+                finalCamera.Priority = 0;
+                break;
+            case GameState.LevelEnd:
+                inGameCamera.Priority = 0;
+                drawingCamera.Priority = 0;
+                finalCamera.Priority = 1;
+                break;
         }
-        //TODO: Level restart vb durumlarý ekle.
+
     }
 
-    private void SwitchPriority()
-    {
-        if (_inGameCam)
-        {
-            inGameCamera.Priority = 0;
-            drawingCamera.Priority = 1;
-        }
-        else
-        {
-            inGameCamera.Priority = 1;
-            drawingCamera.Priority = 0;
-        }
-
-        _inGameCam = !_inGameCam;
-    }
 }

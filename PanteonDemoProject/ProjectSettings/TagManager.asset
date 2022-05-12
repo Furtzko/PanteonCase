@@ -8,6 +8,9 @@ TagManager:
   - RotatorStick
   - RotatingPlatform
   - Wall
+  - DrawingPosition
+  - VerticalPlatform
+  - Opponent
   layers:
   - Default
   - TransparentFX

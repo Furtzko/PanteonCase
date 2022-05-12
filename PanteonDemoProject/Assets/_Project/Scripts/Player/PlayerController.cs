@@ -60,19 +60,30 @@ public class PlayerController : MonoBehaviour
                 playerMovement.enabled = true;
                 animator.SetBool("isRunning", true);
                 break;
-            case GameState.SwipeToDraw:
+            case GameState.Drawing:
                 playerMovement.enabled = false;
                 animator.SetBool("isRunning", false);
                 animator.SetTrigger("jogging");
                 transform.DODynamicLookAt(drawingPosition.position, 1f);
                 transform.DOMove(drawingPosition.position, 3f).SetEase(Ease.Linear);
                 break;
-            case GameState.Drawing:
-                animator.SetTrigger("drawing");
+            case GameState.LevelEnd:
+                StartCoroutine(VictoryAfterDelay());
+                break;
+            case GameState.LevelFail:
+                playerMovement.enabled = false;
+                animator.speed = 0f;
                 break;
             default:
                 break;
         }
+    }
+
+    IEnumerator VictoryAfterDelay()
+    {
+        yield return new WaitForSeconds(3f);
+
+        animator.SetTrigger("victory");
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -115,6 +126,10 @@ public class PlayerController : MonoBehaviour
             {
                 forceToRight = false;
             }
+        }
+        else if (other.CompareTag("DrawingPosition"))
+        {
+            animator.SetTrigger("drawing");
         }
     }
     private void OnTriggerExit(Collider other)

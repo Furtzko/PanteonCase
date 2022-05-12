@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class InGame : MonoBehaviour
 {
     [SerializeField] private GameObject blackoutImg;
-    private Animator animator;
+    [SerializeField] private GameObject rank;
+    private Animator blackoutAnimator;
+    private Animator rankAnimator;
 
     private void Awake()
     {
@@ -20,25 +23,25 @@ public class InGame : MonoBehaviour
     }
 
 
-    // Start is called before the first frame update
     void Start()
     {
-        animator = blackoutImg.GetComponent<Animator>();   
+        blackoutAnimator = blackoutImg.GetComponent<Animator>();
+        //rankAnimator = rank.GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        rank.GetComponent<TextMeshProUGUI>().text = "#" + RankingManager.Instance.PlayerRank;
     }
+
 
     private void HitObstacle()
     {
-        animator.SetTrigger("FadeOut");
+        blackoutAnimator.SetTrigger("FadeOut");
     }
 
     private void LevelRestart()
     {
-        animator.SetTrigger("FadeIn");
+        blackoutAnimator.SetTrigger("FadeIn");
     }
 }

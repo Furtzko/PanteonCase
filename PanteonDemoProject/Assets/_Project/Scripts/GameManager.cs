@@ -6,24 +6,35 @@ public class GameManager : BaseSingleton<GameManager>
 {
     public GameState currentState;
 
-    private void Start()
+    private void Awake()
     {
-        UpdateGameState(GameState.SwipeToPlay);
+        EventManager.OnStateChanged += GameStateChanged;
     }
 
-    public void UpdateGameState(GameState newState)
+    private void OnDestroy()
     {
-        currentState = newState;
-        EventManager._onStateChanged(newState);
+        EventManager.OnStateChanged -= GameStateChanged;
+    }
+
+    private void Start()
+    {
+        EventManager._onStateChanged(GameState.SwipeToStart);
+    }
+
+
+    private void GameStateChanged(GameState state)
+    {
+        currentState = state;
+
     }
 
 }
 
 public enum GameState
 {
-    SwipeToPlay,
+    SwipeToStart,
     InGame,
-    SwipeToDraw,
     Drawing,
-    LevelEnd
+    LevelEnd,
+    LevelFail
 }

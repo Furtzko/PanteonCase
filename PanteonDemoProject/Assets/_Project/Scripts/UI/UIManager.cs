@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class UIManager : BaseSingleton<UIManager>
 {
-    [SerializeField] private GameObject SwipeToPlayUI;
+    [SerializeField] private GameObject SwipeToStartUI;
     [SerializeField] private GameObject InGameUI;
-    [SerializeField] private GameObject SwipeToDrawUI;
     [SerializeField] private GameObject DrawingUI;
     [SerializeField] private GameObject LevelEndUI;
+    [SerializeField] private GameObject LevelFailUI;
 
     private void Awake()
     {
@@ -22,10 +22,10 @@ public class UIManager : BaseSingleton<UIManager>
 
     private void GameStateChanged(GameState state)
     {
-        SwipeToPlayUI.SetActive(state == GameState.SwipeToPlay);
+        SwipeToStartUI.SetActive(state == GameState.SwipeToStart);
         InGameUI.SetActive(state == GameState.InGame);
-        SwipeToDrawUI.SetActive(state == GameState.SwipeToDraw);
         DrawingUI.SetActive(state == GameState.Drawing);
         LevelEndUI.SetActive(state == GameState.LevelEnd);
+        LevelFailUI.SetActive(state == GameState.LevelFail);
     }
 }

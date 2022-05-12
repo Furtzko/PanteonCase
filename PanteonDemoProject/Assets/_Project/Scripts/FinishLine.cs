@@ -10,11 +10,15 @@ public class FinishLine : MonoBehaviour
         {
             StartCoroutine(EndLevel());
         }
+        else if(GameManager.Instance.currentState.Equals(GameState.InGame) && other.CompareTag("Opponent"))
+        {
+            EventManager._onStateChanged(GameState.LevelFail);
+        }
     }
 
     private IEnumerator EndLevel()
     {
         yield return new WaitForSeconds(0.5f);
-        EventManager._onStateChanged(GameState.SwipeToDraw);
+        EventManager._onStateChanged(GameState.Drawing);
     }
 }

@@ -784,7 +784,7 @@ GameObject:
   - component: {fileID: -2855255183715983203}
   m_Layer: 0
   m_Name: Opponent
-  m_TagString: Untagged
+  m_TagString: Opponent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

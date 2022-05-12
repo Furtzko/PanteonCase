@@ -61,16 +61,10 @@ public class OpponentController : MonoBehaviour
                 opponentMovement.enabled = true;
                 animator.SetBool("isRunning", true);
                 break;
-            //case GameState.SwipeToDraw:
-            //    opponentMovement.enabled = false;
-            //    animator.SetBool("isRunning", false);
-            //    animator.SetTrigger("jogging");
-            //    transform.DODynamicLookAt(drawingPosition.position, 1f);
-            //    transform.DOMove(drawingPosition.position, 3f).SetEase(Ease.Linear);
-            //    break;
-            //case GameState.Drawing:
-            //    animator.SetTrigger("drawing");
-            //    break;
+            case GameState.LevelFail:
+                opponentMovement.enabled = false;
+                animator.speed = 0f;
+                break;
             default:
                 break;
         }
