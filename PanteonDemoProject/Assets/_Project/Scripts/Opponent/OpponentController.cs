@@ -38,16 +38,21 @@ public class OpponentController : MonoBehaviour
 
     void Update()
     {
+        if (transform.position.y < -2f)
+        {
+            StartCoroutine(RestartLevel());
+        }
+
         //TODO: RotatingPlatform'a taþýnabilir
         if (isAddingForce)
         {
             if (forceToRight)
             {
-                opponentRb.AddForce(Vector3.right * (100 - rotateCounterForce), ForceMode.Force);
+                opponentRb.AddForce(Vector3.right * (50 - rotateCounterForce), ForceMode.Force);
             }
             else
             {
-                opponentRb.AddForce(Vector3.left * (100 - rotateCounterForce), ForceMode.Force);
+                opponentRb.AddForce(Vector3.left * (50 - rotateCounterForce), ForceMode.Force);
             }
 
         }
@@ -61,9 +66,15 @@ public class OpponentController : MonoBehaviour
                 opponentMovement.enabled = true;
                 animator.SetBool("isRunning", true);
                 break;
+            case GameState.Drawing:
+                opponentMovement.enabled = false;
+                animator.SetBool("isRunning", false);
+                animator.Play("Idle");
+                break;
             case GameState.LevelFail:
                 opponentMovement.enabled = false;
-                animator.speed = 0f;
+                animator.SetBool("isRunning", false);
+                animator.Play("Idle");
                 break;
             default:
                 break;
@@ -98,11 +109,13 @@ public class OpponentController : MonoBehaviour
         animator.SetTrigger("restartTrack");
         transform.position = startPos;
 
-        yield return new WaitForSeconds(.5f);
+        if (GameManager.Instance.currentState.Equals(GameState.InGame))
+        {
+            yield return new WaitForSeconds(.5f);
 
-        opponentMovement.enabled = true;
-        animator.SetBool("isRunning", true);
-
+            opponentMovement.enabled = true;
+            animator.SetBool("isRunning", true);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -122,7 +135,7 @@ public class OpponentController : MonoBehaviour
                 forceToRight = false;
             }
 
-            rotateCounterForce = Random.Range(175.0f, 25.0f);
+            rotateCounterForce = Random.Range(100.0f, 0.0f);
             Debug.Log(rotateCounterForce);
         }
     }

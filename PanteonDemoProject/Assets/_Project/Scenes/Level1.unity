@@ -922,7 +922,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SOME RUNNER
+  m_text: 'EDGE
+
+    OF
+
+    PLATFORM'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 69193a3ed0e55e94e9442eb3b5793e3f, type: 2}
   m_sharedMaterial: {fileID: 1611246187333867781, guid: 69193a3ed0e55e94e9442eb3b5793e3f, type: 2}
@@ -949,12 +953,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 250
+  m_fontSize: 230
   m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 250
+  m_fontSizeMax: 230
   m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -8055,7 +8059,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1176532878
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10901,6 +10905,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1413042764}
     m_Modifications:
+    - target: {fileID: -7096879928868962321, guid: 033effa74424c614f928577d919c3bb3, type: 3}
+      propertyPath: m_Size.y
+      value: 0.024322877
+      objectReference: {fileID: 0}
+    - target: {fileID: -7096879928868962321, guid: 033effa74424c614f928577d919c3bb3, type: 3}
+      propertyPath: m_Center.y
+      value: 0.00795397
+      objectReference: {fileID: 0}
+    - target: {fileID: -7096879928868962321, guid: 033effa74424c614f928577d919c3bb3, type: 3}
+      propertyPath: m_Center.z
+      value: -0.000000015894573
+      objectReference: {fileID: 0}
     - target: {fileID: 2557612599875842234, guid: 033effa74424c614f928577d919c3bb3, type: 3}
       propertyPath: m_Name
       value: Platform (5)

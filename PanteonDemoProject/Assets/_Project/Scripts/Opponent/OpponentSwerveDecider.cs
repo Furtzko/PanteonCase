@@ -14,6 +14,7 @@ public class OpponentSwerveDecider : MonoBehaviour
 
     private bool isRandomNumGenerated = false;
 
+    private bool isEscapingRotatingPlatform = false;
 
     private float moveFactorX;
     public float MoveFactorX => moveFactorX;
@@ -33,7 +34,7 @@ public class OpponentSwerveDecider : MonoBehaviour
                 RandomNumGenerate();
             }
         }
-        else
+        else if(!isEscapingRotatingPlatform)
         {
             curHitDistance = maxDistance;
             isRandomNumGenerated = false;
@@ -50,14 +51,29 @@ public class OpponentSwerveDecider : MonoBehaviour
 
     }
 
-    //private IEnumerator EscapeRotatingPlatform()
-    //{
-    //    moveFactorX = -transform.position.z;
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("VerticalPlatform"))
+        {
+            StartCoroutine(EscapeRotatingPlatform());
+        }
+    }
 
-    //    yield return new WaitForSeconds(1f);
+    private IEnumerator EscapeRotatingPlatform()
+    {
+        isEscapingRotatingPlatform = true;
 
-    //    moveFactorX = 0;
-    //}
+        moveFactorX = -transform.position.x;
+        Debug.Log("moveX: " + moveFactorX);
+
+        yield return new WaitForSeconds(1f);
+
+        moveFactorX = 0;
+
+        Debug.Log("moveX: 0000");
+    }
+
+    
 
     //TODO: kaldýrýlabilir.
     private void OnDrawGizmosSelected()

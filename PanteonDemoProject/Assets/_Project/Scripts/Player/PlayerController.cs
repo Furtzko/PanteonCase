@@ -36,16 +36,24 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (transform.position.y < -2f)
+        {
+            EventManager._onHitObstacle();
+            playerMovement.enabled = false;
+
+            StartCoroutine(RestartLevel());
+        }
+
         //TODO: RotatingPlatform'a taþýnabilir
         if (isAddingForce)
         {
             if (forceToRight)
             {
-                playerRb.AddForce(Vector3.right * 100, ForceMode.Force);
+                playerRb.AddForce(Vector3.right * 50, ForceMode.Force);
             }
             else
             {
-                playerRb.AddForce(Vector3.left * 100, ForceMode.Force);
+                playerRb.AddForce(Vector3.left * 50, ForceMode.Force);
             }
             
         }
@@ -72,7 +80,8 @@ public class PlayerController : MonoBehaviour
                 break;
             case GameState.LevelFail:
                 playerMovement.enabled = false;
-                animator.speed = 0f;
+                animator.SetBool("isRunning", false);
+                animator.Play("Idle");
                 break;
             default:
                 break;
@@ -149,10 +158,13 @@ public class PlayerController : MonoBehaviour
         animator.SetTrigger("restartTrack");
         transform.position = startPosition;
 
-        yield return new WaitForSeconds(.5f);
+        if (GameManager.Instance.currentState.Equals(GameState.InGame))
+        {
+            yield return new WaitForSeconds(.5f);
 
-        playerMovement.enabled = true;
-        animator.SetBool("isRunning", true);
+            playerMovement.enabled = true;
+            animator.SetBool("isRunning", true);
+        }
 
     }
 }
