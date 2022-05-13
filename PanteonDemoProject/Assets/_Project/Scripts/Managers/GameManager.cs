@@ -28,6 +28,11 @@ public class GameManager : BaseSingleton<GameManager>
 
     }
 
+    public void Exit()
+    {
+        Application.Quit();
+    }
+
 }
 
 public enum GameState
