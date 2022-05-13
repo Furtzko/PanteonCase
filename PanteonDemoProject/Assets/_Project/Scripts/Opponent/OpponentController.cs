@@ -38,12 +38,12 @@ public class OpponentController : MonoBehaviour
 
     void Update()
     {
+        //Karakter su seviyesine düþerse baþlangýç posizyonuna gönderilir.
         if (transform.position.y < -2f)
         {
             StartCoroutine(RestartLevel());
         }
 
-        //TODO: RotatingPlatform'a taþýnabilir
         if (isAddingForce)
         {
             if (forceToRight)
@@ -122,7 +122,7 @@ public class OpponentController : MonoBehaviour
     {
         if (other.CompareTag("RotatingPlatform"))
         {
-            //TODO: swerveCont singleton yap, instancedan düzenle.
+            //Karakterlerin suya düþebilmeleri için clamp aralýðý artýrýlýyor.
             GetComponent<OpponentSwerve>().xClampValue = 100f;
 
             isAddingForce = true;
@@ -135,8 +135,8 @@ public class OpponentController : MonoBehaviour
                 forceToRight = false;
             }
 
+            //Platformun uyguladýðý 50 birim kuvvete karþýlýk, karakterin uygulayacaðý karþý kuvvet random olarak belirleniyor.
             rotateCounterForce = Random.Range(100.0f, 0.0f);
-            Debug.Log(rotateCounterForce);
         }
     }
     private void OnTriggerExit(Collider other)

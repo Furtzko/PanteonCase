@@ -5,7 +5,7 @@ using UnityEngine;
 public class OpponentSwerve : MonoBehaviour
 {
     private OpponentSwerveDecider swerveDecider;
-    [SerializeField] private float swerveSpeed = 0.5f;
+    [SerializeField] private float swerveSpeed = .8f;
     [SerializeField] private float maxSwerveAmount = 1f;
     [SerializeField] private float forwardSpeed = 5f;
     public float xClampValue = 3.5f;

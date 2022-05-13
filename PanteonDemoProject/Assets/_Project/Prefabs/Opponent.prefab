@@ -880,7 +880,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdcc152cc2ea3314d88e9b78fbbc29db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swerveSpeed: 0.5
+  swerveSpeed: 0.8
   maxSwerveAmount: 1
   forwardSpeed: 5
   xClampValue: 3.5

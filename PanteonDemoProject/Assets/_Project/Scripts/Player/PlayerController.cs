@@ -36,15 +36,15 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //Karakter su seviyesine düþerse baþlangýç posizyonuna gönderilir.
         if (transform.position.y < -2f)
         {
-            EventManager._onHitObstacle();
+            EventManager._onScreenFadeOut();
             playerMovement.enabled = false;
 
             StartCoroutine(RestartLevel());
         }
 
-        //TODO: RotatingPlatform'a taþýnabilir
         if (isAddingForce)
         {
             if (forceToRight)
@@ -55,9 +55,7 @@ public class PlayerController : MonoBehaviour
             {
                 playerRb.AddForce(Vector3.left * 50, ForceMode.Force);
             }
-            
         }
-
     }
 
     private void GameStateChanged(GameState state)
@@ -99,14 +97,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            EventManager._onHitObstacle();
+            EventManager._onScreenFadeOut();
             VirtualCamController.Instance.ShakeCamera(2f, .3f);
             playerMovement.enabled = false;
             animator.SetTrigger("hitObstacle");
 
             StartCoroutine(RestartLevel());
-
-            
         }
         else if (collision.gameObject.CompareTag("RotatorStick"))
         {
@@ -123,7 +119,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.CompareTag("RotatingPlatform"))
         {
-            //TODO: swerveCont singleton yap, instancedan düzenle.
+            //Karakterlerin suya düþebilmeleri için clamp aralýðý artýrýlýyor.
             GetComponent<SwerveController>().xClampValue = 100f;
 
             isAddingForce = true;
@@ -154,9 +150,10 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(.8f);
 
-        EventManager._onLevelRestart();
+        EventManager._onScreenFadeIn();
         animator.SetTrigger("restartTrack");
         transform.position = startPosition;
+
 
         if (GameManager.Instance.currentState.Equals(GameState.InGame))
         {

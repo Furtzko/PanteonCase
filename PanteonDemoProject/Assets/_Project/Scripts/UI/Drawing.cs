@@ -22,7 +22,6 @@ public class Drawing : MonoBehaviour
                 }
             }
         }
-
     }
 
     private IEnumerator CompleteLevel()

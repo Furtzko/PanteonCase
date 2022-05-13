@@ -12,21 +12,23 @@ public class InGame : MonoBehaviour
 
     private void Awake()
     {
-        EventManager.OnHitObstacle += HitObstacle;
-        EventManager.OnLevelRestart += LevelRestart;
+        EventManager.OnScreenFadeOut += ScreenFadeOut;
+        EventManager.OnScreenFadeIn += ScreenFadeIn;
+        EventManager.OnRankChanged += RankChanged;
     }
 
     private void OnDestroy()
     {
-        EventManager.OnHitObstacle -= HitObstacle;
-        EventManager.OnLevelRestart -= LevelRestart;
+        EventManager.OnScreenFadeOut -= ScreenFadeOut;
+        EventManager.OnScreenFadeIn -= ScreenFadeIn;
+        EventManager.OnRankChanged -= RankChanged;
     }
 
 
     void Start()
     {
         blackoutAnimator = blackoutImg.GetComponent<Animator>();
-        //rankAnimator = rank.GetComponent<Animator>();
+        rankAnimator = rank.GetComponent<Animator>();
     }
 
     private void Update()
@@ -35,13 +37,18 @@ public class InGame : MonoBehaviour
     }
 
 
-    private void HitObstacle()
+    private void ScreenFadeOut()
     {
         blackoutAnimator.SetTrigger("FadeOut");
     }
 
-    private void LevelRestart()
+    private void ScreenFadeIn()
     {
         blackoutAnimator.SetTrigger("FadeIn");
+    }
+
+    private void RankChanged()
+    {
+        rankAnimator.SetTrigger("posChanged");
     }
 }

@@ -11,6 +11,7 @@ public class RankingManager : BaseSingleton<RankingManager>
     private float playerCurrentPos;
 
     private int playerRank;
+    private int playerCurrentRank = 0;
     public int PlayerRank => playerRank;
 
     void Update()
@@ -18,6 +19,7 @@ public class RankingManager : BaseSingleton<RankingManager>
         RankCalc();
     }
 
+    //Tüm karakterlerin z pozisyonu listeye alýnýp sýralanýr.
     private void RankCalc()
     {
         racerZPositions = new List<float>();
@@ -32,16 +34,11 @@ public class RankingManager : BaseSingleton<RankingManager>
 
         playerRank = 11 - racerZPositions.IndexOf(playerCurrentPos);
 
-        /*
-        Debug.Log("**********************");
-        Debug.Log("----------------------");
-        foreach (float a in racerZPositions)
+        if(playerRank != playerCurrentRank)
         {
-            Debug.Log(a);
+            EventManager._onRankChanged();
+            playerCurrentRank = playerRank;
         }
-        Debug.Log("----------------------");
-        Debug.Log(playerRank);
-        Debug.Log("**********************");
-        */
+
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class OpponentSwerveDecider : MonoBehaviour
 {
     private float sphereRadius = 0.4f;
-    private float maxDistance = 4f;
+    private float maxDistance = 8f;
     [SerializeField] private LayerMask layerMask;
     private Vector3 origin;
     private Vector3 direction;
@@ -25,7 +25,8 @@ public class OpponentSwerveDecider : MonoBehaviour
         direction = transform.forward;
         RaycastHit hit;
 
-        if(Physics.SphereCast(origin,sphereRadius,direction,out hit,maxDistance,layerMask, QueryTriggerInteraction.UseGlobal))
+        //Obstacle'la karþýlaþýlýrsa random bir deðer üretilip, swerve deðeri olarak OpponentSwerve'e gönderiliyor. 
+        if (Physics.SphereCast(origin,sphereRadius,direction,out hit,maxDistance,layerMask, QueryTriggerInteraction.UseGlobal))
         {
             curHitDistance = hit.distance;
 
@@ -41,14 +42,6 @@ public class OpponentSwerveDecider : MonoBehaviour
             moveFactorX = 0f;
         }
 
-        //if (Physics.SphereCast(origin, sphereRadius, direction, out hit, 0.5f))
-        //{
-        //    if (hit.transform.CompareTag("VerticalPlatform"))
-        //    {
-        //        StartCoroutine(EscapeRotatingPlatform());
-        //    }
-        //}
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -59,23 +52,18 @@ public class OpponentSwerveDecider : MonoBehaviour
         }
     }
 
+    //Karakter RotatingPlatformda takýlý kaldýysa, x pozisyounun tersine kýsa süreli kuvvet uygulanarak düz platforma dönmesi saðlanýr.
     private IEnumerator EscapeRotatingPlatform()
     {
         isEscapingRotatingPlatform = true;
-
         moveFactorX = -transform.position.x;
-        Debug.Log("moveX: " + moveFactorX);
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
         moveFactorX = 0;
-
-        Debug.Log("moveX: 0000");
     }
 
-    
-
-    //TODO: kaldýrýlabilir.
+    //SphereCast visualization.
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
